@@ -1,4 +1,14 @@
+import TerminalText from "@/components/terminal-text"
+
 export default function introduccion() {
+  //MacOs
+  const lineasDeLogsMac1 = ["#Opcion 1: Herramienta de linea de comandos de xcode.", "xcode-select --install"];
+  const lineasDeLogsMac2 = ["#Opcion 2: Homebrew", "brew install git"]
+
+  //Linux
+  const lineasDeLogsLinux1 = ["sudo apt update && sudo apt install -y git", "#Verificar", "git --version"];
+  const lineasDeLogsLinux2 = ["sudo dnf install -y git", "#Verificar", "git --version"];
+  const lineasDeLogsLinux3 = ["sudo pacman -Syu git", "#Verificar", "git --version"];
   return (
     <div className="felx flex-1 flex-col gap-4 p-6">
       <h1 className="text-2xl font-semibold shimmer-color-mist-600 tracking-tight">
@@ -28,6 +38,42 @@ export default function introduccion() {
           <li className="cursor-pointer">Recomiendo la versión instalable sobre la portable.</li>
           <li className="cursor-pointer">Selecciona la versión para tu tipo de procesador y realiza la instalación como cualquier programa de Windows.</li>
         </ul>
+      </section>
+
+      <section className="felx flex-1 flex-col p-3">
+        <h3 className="font-semibold shimmer-color-mist-600 tracking-tight">
+          MacOs.
+        </h3>
+        <p className="max-w-prose text-muted-foreground">
+          Puedes instalar Git de dos formas.
+        </p>
+        <div className="p-4">
+          <TerminalText lines={lineasDeLogsMac1} />
+        </div>
+        <div className="p-4">
+          <TerminalText lines={lineasDeLogsMac2} />
+        </div>
+      </section>
+
+      <section className="felx flex-1 flex-col p-3">
+        <h3 className="font-semibold shimmer-color-mist-600 tracking-tight">
+          Linux.
+        </h3>
+        <p className="max-w-prose text-muted-foreground">
+          Segun tu distribucion de linux o deribacion de distribucion.
+        </p>
+        <div className="p-4">
+          <p>Basadas en debian - Ubuntu</p>
+          <TerminalText lines={lineasDeLogsLinux1} />
+        </div>
+        <div className="p-4">
+          <p>Basadas en Fedora - RedHat</p>
+          <TerminalText lines={lineasDeLogsLinux2} />
+        </div>
+        <div className="p-4">
+          <p>Basadas en Arch</p>
+          <TerminalText lines={lineasDeLogsLinux3} />
+        </div>
       </section>
     </div>
   )
