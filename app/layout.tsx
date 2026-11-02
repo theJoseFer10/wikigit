@@ -7,8 +7,11 @@ import {
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ProgressBar } from "@/components/progress-bar";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { ProgressProvider } from "@/hooks/use-progress";
 import "./globals.css";
+
+const themeScript = `(function(){try{var t=localStorage.getItem("wikigit:theme");var d=t==="dark"||((!t||t==="system")&&window.matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.toggle("dark",d)}catch(e){}})();`;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,8 +34,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full">
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <ProgressProvider>
           <SidebarProvider>
             <AppSidebar />
@@ -40,6 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
                 <SidebarTrigger />
                 <ProgressBar />
+                <ThemeToggle />
               </header>
               {children}
             </SidebarInset>
