@@ -7,9 +7,7 @@ import { ChevronRight, GitBranch } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
-  SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -22,7 +20,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
-import { footerLinks, navSections, type NavSection } from "@/lib/nav"
+import { navSections, type NavSection } from "@/lib/nav"
 
 function SectionGroup({ section }: { section: NavSection }) {
   const pathname = usePathname()
@@ -108,28 +106,6 @@ export function AppSidebar() {
           <SectionGroup key={section.title} section={section} />
         ))}
       </SidebarContent>
-      <SidebarSeparator />
-      <SidebarFooter>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {footerLinks.map((link) => (
-                <SidebarMenuItem key={link.href}>
-                  <SidebarMenuButton
-                    size="sm"
-                    tooltip={link.title}
-                    render={<Link href={link.href} />}
-                    onClick={() => setOpenMobile(false)}
-                  >
-                    <link.icon />
-                    <span>{link.title}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   )

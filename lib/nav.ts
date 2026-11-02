@@ -1,16 +1,12 @@
 import type { LucideIcon } from "lucide-react"
 import {
-  Boxes,
   GitBranch,
   GitCommitHorizontal,
   GitFork,
   GitPullRequest,
   Library,
-  ListTree,
   RotateCcw,
   Rocket,
-  Tag,
-  Webhook,
   Wrench,
 } from "lucide-react"
 
@@ -108,11 +104,4 @@ export const navSections: NavSection[] = [
       { title: "Recursos recomendados", href: "/referencias/recursos" },
     ],
   },
-]
-
-export const footerLinks = [
-  { title: "Índice", href: "/referencias/cheat-sheet", icon: ListTree },
-  { title: "Etiquetas", href: "/referencias/glosario", icon: Tag },
-  { title: "Integraciones", href: "/avanzado/hooks", icon: Webhook },
-  { title: "Explorar", href: "/referencias/recursos", icon: Boxes },
 ]
