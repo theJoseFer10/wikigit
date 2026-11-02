@@ -2,6 +2,9 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { CheckCircle2 } from "lucide-react";
+import { useProgress } from "@/hooks/use-progress";
 
 interface LogEntry {
   command: string;
@@ -63,6 +66,10 @@ export default function TerminalEmulator({
   const [input, setInput] = useState("");
   const terminalEndRef = useRef<HTMLDivElement>(null);
   const completedRef = useRef(false);
+  const pathname = usePathname();
+  const { loaded, isComplete, markComplete } = useProgress();
+  const activityId = pathname.startsWith("/actividades/") ? pathname : null;
+  const activityCompleted = activityId ? isComplete(activityId) : false;
 
   // Auto-scroll al final cuando agregamos líneas
   useEffect(() => {
@@ -79,8 +86,9 @@ export default function TerminalEmulator({
   useEffect(() => {
     if (!allCompleted || completedRef.current) return;
     completedRef.current = true;
+    if (activityId) markComplete(activityId);
     onComplete?.();
-  }, [allCompleted, onComplete]);
+  }, [allCompleted, onComplete, activityId, markComplete]);
 
   const helpOutput = [
     "Comandos de la terminal: help, clear, about, date",
@@ -142,6 +150,27 @@ export default function TerminalEmulator({
     setHistory((prev) => [...prev, { command: trimmedInput, output, type }]);
     setInput("");
   };
+
+  if (activityId && !loaded) {
+    return (
+      <div className="w-full bg-black p-4 rounded-lg shadow-2xl border border-neutral-800 h-[350px] animate-pulse" />
+    );
+  }
+
+  if (activityId && activityCompleted) {
+    return (
+      <div className="w-full bg-black text-white font-mono p-4 rounded-lg shadow-2xl border border-emerald-900/60 h-[350px] flex flex-col items-center justify-center gap-3 text-center">
+        <CheckCircle2 className="size-10 text-emerald-400" />
+        <p className="text-sm font-semibold text-emerald-400">
+          Actividad completada
+        </p>
+        <p className="max-w-sm text-sm text-neutral-400">{completionMessage}</p>
+        <p className="max-w-sm text-xs text-neutral-600">
+          Ya completaste esta actividad. Tu progreso quedo guardado.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full bg-black text-white font-mono p-4 rounded-lg shadow-2xl border border-neutral-800 h-[350px] flex flex-col">

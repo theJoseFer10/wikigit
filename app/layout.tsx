@@ -6,6 +6,8 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { ProgressBar } from "@/components/progress-bar";
+import { ProgressProvider } from "@/hooks/use-progress";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,15 +33,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full">
-        <SidebarProvider>
-          <AppSidebar />
-          <SidebarInset>
-            <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
-              <SidebarTrigger />
-            </header>
-            {children}
-          </SidebarInset>
-        </SidebarProvider>
+        <ProgressProvider>
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+              <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
+                <SidebarTrigger />
+                <ProgressBar />
+              </header>
+              {children}
+            </SidebarInset>
+          </SidebarProvider>
+        </ProgressProvider>
       </body>
     </html>
   );
